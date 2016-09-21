@@ -1,0 +1,11 @@
+d:\users\10447_000\documents\visual studio 2015\Projects\greedySnake\greedySnake\bin\Debug\greedySnake.exe.config
+d:\users\10447_000\documents\visual studio 2015\Projects\greedySnake\greedySnake\bin\Debug\greedySnake.exe
+d:\users\10447_000\documents\visual studio 2015\Projects\greedySnake\greedySnake\bin\Debug\greedySnake.pdb
+d:\users\10447_000\documents\visual studio 2015\Projects\greedySnake\greedySnake\obj\Debug\greedySnake.exe
+d:\users\10447_000\documents\visual studio 2015\Projects\greedySnake\greedySnake\obj\Debug\greedySnake.pdb
+F:\greedySnake\greedySnake\bin\Debug\greedySnake.exe.config
+F:\greedySnake\greedySnake\obj\Debug\greedySnake.exe
+F:\greedySnake\greedySnake\obj\Debug\greedySnake.pdb
+F:\greedySnake\greedySnake\bin\Debug\greedySnake.exe
+F:\greedySnake\greedySnake\bin\Debug\greedySnake.pdb
+F:\greedySnake\greedySnake\obj\Debug\greedySnake.csprojResolveAssemblyReference.cache
