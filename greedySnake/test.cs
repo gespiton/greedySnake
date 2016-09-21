@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using greedySnake;
 namespace test
 {
@@ -15,8 +16,11 @@ namespace test
             var s = new snake();
 
             Console.ReadKey();
-            //Sample.WriteAt("0", 50, 15);
-            
+            //Sample.WriteAt("0", 50, 15);            
         }
+        //void start_game()
+        //{
+        //    ThreadStart snake = new ThreadStart()
+        //}
     }
 }

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
+
 
 namespace greedySnake
 {
@@ -12,6 +13,11 @@ namespace greedySnake
         {
             Sample.draw();
             Console.ReadKey();
+            //ThreadStart
+        }
+        void start_game()
+        {
+            //ThreadStart snake = new ThreadStart()
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace greedySnake
 {
@@ -36,45 +36,78 @@ namespace greedySnake
             snake_drawHead(snake_body[0]);
             //////Console.WriteLine( snake_body.Count());
             WriteAt((char)15, 50, 16);
+            Console.ReadKey();
+            action();
+            //snake_move_normal();
+
         }
         void snake_drawHead(int[] head)
         {
             //draw snake head
-
-            Sample.WriteAt((char)snake_dir, head[0], head[1]);
-
+            WriteAt((char)snake_dir, head[0], head[1]);
         }
         void snake_reset(int[] tail)
         {
             WriteAt((char)0, tail[0], tail[1]);
         }
-        void snake_progress_normal()
+        void snake_drawBody(int[] body)
         {
-            switch (snake_dir)
-            {
-                case snake_head.UP:
-                    if (snake_check())
-                    {
-                        snake_body.Insert(0, new int[] { snake_body[0][0], snake_body[0][1] + 1 });
-                        snake_drawHead(snake_body[0]);
+            WriteAt((char)15, body[0], body[1]);
+        }
+        void snake_move_normal()
+        {
+            //while (true)
+            //{
 
-                        snake_body.RemoveAt(snake_body.Count() - 1);
-                    }
+                switch (snake_dir)
+                {
+                  //move up
+                  case snake_head.UP:              
+                    snake_body.Insert(0, new int[] { snake_body[0][0], snake_body[0][1] - 1 });
+                    snake_drawHead(snake_body[0]);
+                    snake_drawBody(snake_body[1]);
+                    snake_reset(snake_body[snake_body.Count() - 1]);
+                    snake_body.RemoveAt(snake_body.Count() - 1);
                     break;
-            }
+                // move down
+
+                // move left 
+
+                // move right
+                }
+            //}
+        }
+        void pase_fuc()
+        {
+            ;
         }
 
-         void WriteAt(char s, int x, int y)
+        void WriteAt(char s, int x, int y)
         {
 
             Console.SetCursorPosition(x, y);
             Console.Write(s);
         }
-
         bool snake_check()
         {
+            // check if hit the wall 
 
+            // check if eat itself
             return true;
+        }
+        void action()
+        {
+            ThreadStart act = new ThreadStart(pase_fuc);
+            Thread actThread = new Thread(act);
+            actThread.Start();
+            Thread.Sleep(1000);
+            while (snake_check())
+            {
+                Console.Write(Thread.CurrentThread);
+                Thread.Sleep(1000);
+                snake_move_normal();
+            }
+            // ctrol the snacks movement
         }
     }
 }
