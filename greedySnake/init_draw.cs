@@ -8,13 +8,16 @@ class Sample
 {
     //protected static int origRow;
     //protected static int origCol;
-
+    static bool wait = false;
     public static void WriteAt(string s, int x, int y)
     {
+        while (wait) { }
         try
         {
+            wait = true;
             Console.SetCursorPosition(x, y);
             Console.Write(s);
+            wait = false;
         }
         catch (ArgumentOutOfRangeException e)
         {
@@ -24,10 +27,13 @@ class Sample
     }
     public static void WriteAt(char s, int x, int y)
     {
+        while (wait) { }
         try
         {
+            wait = true;
             Console.SetCursorPosition( x,  y);
             Console.Write(s);
+            wait = false;
         }
         catch (ArgumentOutOfRangeException e)
         {

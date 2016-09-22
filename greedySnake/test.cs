@@ -14,8 +14,25 @@ namespace test
             Sample.draw();
 
             var s = new snake();
+            var food = new feed();
+            Thread move = new Thread(new ThreadStart(s.action));
+            Thread key_handle = new Thread(new ThreadStart(s.key_handler));
+            Thread generator = new Thread(new ThreadStart(food.generator));
+            move.Start();
+            key_handle.Start();
+            generator.Start();
+            //List<int[]> li = new List<int[]> { };
+            //li.Add(new int[] { 1, 2 });
+            //int[] t = new int[] { 1, 2 };
+            //li.RemoveAt(0);
+            //Console.WriteLine(li.Count.ToString());
+            //Console.WriteLine("started");
 
-            Console.ReadKey();
+            //////var key = Console.ReadKey(false);
+            //////while (move.IsAlive){
+            //////    Console.WriteLine(key.ToString());
+            //////    key = Console.ReadKey();
+            //////}
             //Sample.WriteAt("0", 50, 15);            
         }
         //void start_game()
