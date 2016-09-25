@@ -3,3 +3,7 @@
 key buffer #
 
 score display
+
+comber
+
+eat then change color
