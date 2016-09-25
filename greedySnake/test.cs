@@ -11,16 +11,19 @@ namespace test
     {
         static void Main()
         {
-            Sample.draw();
-
+            Console.Title = "greedySnake";
+            init.draw();
             var s = new snake();
             var food = new feed();
             Thread move = new Thread(new ThreadStart(s.action));
             Thread key_handle = new Thread(new ThreadStart(s.key_handler));
             Thread generator = new Thread(new ThreadStart(food.generator));
+            //Thread speed_control = new Thread(snake.shift_prssed);
             move.Start();
             key_handle.Start();
             generator.Start();
+            //speed_control.Start();
+
             //List<int[]> li = new List<int[]> { };
             //li.Add(new int[] { 1, 2 });
             //int[] t = new int[] { 1, 2 };
