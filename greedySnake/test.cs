@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using greedySnake;
+using ConsoleB = Colorful.Console;
+using System.Drawing;
 namespace test
 {
     class test
@@ -13,6 +15,7 @@ namespace test
         {
             Console.Title = "greedySnake";
             init.draw();
+            ////ConsoleB.WriteAscii("haha");
             var s = new snake();
             var food = new feed();
             Thread move = new Thread(new ThreadStart(s.action));
@@ -22,6 +25,15 @@ namespace test
             move.Start();
             key_handle.Start();
             generator.Start();
+            while (move.IsAlive)
+            {}
+            key_handle.Abort();
+            generator.Abort();
+            Console.WriteLine("you");
+            Console.ReadKey();
+
+            return;
+           
             //speed_control.Start();
 
             //List<int[]> li = new List<int[]> { };

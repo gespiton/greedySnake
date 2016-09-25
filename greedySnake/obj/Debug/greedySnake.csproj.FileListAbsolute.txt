@@ -9,3 +9,5 @@ F:\greedySnake\greedySnake\obj\Debug\greedySnake.pdb
 F:\greedySnake\greedySnake\bin\Debug\greedySnake.exe
 F:\greedySnake\greedySnake\bin\Debug\greedySnake.pdb
 F:\greedySnake\greedySnake\obj\Debug\greedySnake.csprojResolveAssemblyReference.cache
+F:\greedySnake\greedySnake\bin\Debug\Colorful.Console.dll
+F:\greedySnake\greedySnake\bin\Debug\Colorful.Console.xml
