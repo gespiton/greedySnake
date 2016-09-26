@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class init
+class drawwing
 {
     //protected static int origRow;
     //protected static int origCol;
@@ -88,6 +88,6 @@ class init
         }
         Console.BackgroundColor = ConsoleColor.DarkCyan;
         Console.ForegroundColor = ConsoleColor.Black;
-        WriteAt("craft by @ sher", 90, 34);
+        WriteAt("craft by @ sher", 94, 34,fore:ConsoleColor.White);
     }
 }

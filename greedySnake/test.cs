@@ -7,6 +7,7 @@ using System.Threading;
 using greedySnake;
 using ConsoleB = Colorful.Console;
 using System.Drawing;
+
 namespace test
 {
     class test
@@ -14,14 +15,19 @@ namespace test
         static void Main()
         {
             Console.Title = "greedySnake";
-            init.draw();
+            drawwing.draw();
             ////ConsoleB.WriteAscii("haha");
+            //snake.write_time();
             var s = new snake();
             var food = new feed();
             Thread move = new Thread(new ThreadStart(s.action));
             Thread key_handle = new Thread(new ThreadStart(s.key_handler));
             Thread generator = new Thread(new ThreadStart(food.generator));
+            Thread time = new Thread(new ThreadStart(snake.write_time));
             //Thread speed_control = new Thread(snake.shift_prssed);
+            //Thread draw = new Thread(() => drawwing.WriteAt("hh", 20, 2));
+            //draw.Start();
+            time.Start();
             move.Start();
             key_handle.Start();
             generator.Start();

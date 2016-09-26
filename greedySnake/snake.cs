@@ -56,18 +56,18 @@ namespace greedySnake
         void snake_drawHead(int[] head,ConsoleColor fore_ = ConsoleColor.Yellow)
         {
             //draw snake head
-            //init.WriteAt((char)snake_dir, head[0], head[1]);
-            init.WriteAt('¤', head[0], head[1],fore:fore_);
+            //drawwing.WriteAt((char)snake_dir, head[0], head[1]);
+            drawwing.WriteAt('¤', head[0], head[1],fore:fore_);
         }
         static public void snake_reset(int[] tail)
         {
             if (tail == null)
                 return;
-            init.WriteAt(" ", tail[0], tail[1]);
+            drawwing.WriteAt(" ", tail[0], tail[1]);
         }
         void snake_drawBody(int[] body)
         {
-            init.WriteAt('☉', body[0], body[1],fore:ConsoleColor.Green);
+            drawwing.WriteAt('☉', body[0], body[1],fore:ConsoleColor.Green);
         }
         void snake_move_normal()
         {
@@ -163,7 +163,7 @@ namespace greedySnake
             if (snake_body[0].SequenceEqual(snake_body[snake_body.Count - 1]))
             {
                 eat_tail();
-                init.WriteAt("most delicious", 50, 15, ConsoleColor.Red);
+                drawwing.WriteAt("most delicious", 50, 15, ConsoleColor.Red);
                 return false;
             }
 
@@ -331,6 +331,14 @@ namespace greedySnake
             snake_body.Clear();
             snake_body.Add(buf);
         }
+        public static void write_time()
+        {
+            while (true)
+            {
+                drawwing.WriteAt(DateTime.Now.ToString().Remove(0,14), 100, 0,back:ConsoleColor.White,fore:ConsoleColor.DarkMagenta);
+                Thread.Sleep(1000);
+            }
+        }
     }
     public class feed
     {
@@ -354,7 +362,7 @@ namespace greedySnake
             while (true)
             {
                 cur_second = DateTime.Now.Second;
-                init.WriteAt(food_table.Count.ToString(), 0, 32);
+                drawwing.WriteAt(food_table.Count.ToString(), 0, 32);
                 if(food_table.Count > max_food)
                 {
                     if (cur_second - last_second > 3)
@@ -373,7 +381,7 @@ namespace greedySnake
                 food_table.Add(new_pos);  // add the new food to table
 
                 ++total;
-                init.WriteAt('◎', new_pos[0], new_pos[1],fore:ConsoleColor.Cyan);
+                drawwing.WriteAt('◎', new_pos[0], new_pos[1],fore:ConsoleColor.Cyan);
                 if (cur_second - last_second > 5)
                 {
                     last_second = cur_second;
@@ -384,7 +392,7 @@ namespace greedySnake
         }
         public static void score()
         {
-            init.WriteAt("SCORE : " + (cur_score * 10).ToString(), 0, 33,fore:ConsoleColor.Red);
+            drawwing.WriteAt("SCORE : " + (cur_score * 10).ToString(), 0, 33,fore:ConsoleColor.Red);
         }
         static public void eaten(int[] pos)
         {
