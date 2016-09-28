@@ -14,23 +14,36 @@ namespace test
         static void Main()
         {
             Console.Title = "greedySnake";
-            init.draw();
+            drawwing.draw();
             ////ConsoleB.WriteAscii("haha");
             var s = new snake();
             var food = new feed();
             Thread move = new Thread(new ThreadStart(s.action));
             Thread key_handle = new Thread(new ThreadStart(s.key_handler));
             Thread generator = new Thread(new ThreadStart(food.generator));
+            Thread time = new Thread(new ThreadStart(snake.write_time));
             //Thread speed_control = new Thread(snake.shift_prssed);
+            //Thread draw = new Thread(() => drawwing.WriteAt("hh", 20, 2));
+            //draw.Start();
+            time.Start();
             move.Start();
             key_handle.Start();
             generator.Start();
-            while (move.IsAlive)
-            {}
+            while (move.IsAlive){}
             key_handle.Abort();
             generator.Abort();
-            Console.WriteLine("you");
-            Console.ReadKey();
+            time.Abort();
+
+            Thread.Sleep(300);
+
+            ConsoleB.BackgroundColor = Color.DarkCyan;
+            Console.Clear();
+
+            Thread you_Died = new Thread(new ThreadStart(drawwing.ha_youDied));
+            drawwing.death_comic(feed.cur_score);
+            Thread.Sleep(500);
+            you_Died.Start();
+            Console.ReadKey(true);
 
             return;
            

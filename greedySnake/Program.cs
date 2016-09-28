@@ -11,7 +11,7 @@ namespace greedySnake
     {
         static void Main(string[] args)
         {
-            init.draw();
+            drawwing.draw();
             Console.ReadKey();
             //ThreadStart
         }
