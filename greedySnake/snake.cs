@@ -365,7 +365,7 @@ namespace greedySnake
             {
                 cur_second = DateTime.Now.Second;
                 drawwing.WriteAt(food_table.Count.ToString(), 0, 32);
-                if (food_table.Count > max_food)
+                if(food_table.Count > max_food)
                 {
                     if (cur_second - last_second > 3|last_second-cur_second>3)
                     {
