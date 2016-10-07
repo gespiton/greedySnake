@@ -11,50 +11,58 @@ class drawwing
 {
     //protected static int origRow;
     //protected static int origCol;
+    static object lock_write = new object();
     static bool wait = false;
     const ConsoleColor fore_color = ConsoleColor.Black;
     const ConsoleColor back_color = ConsoleColor.DarkCyan;
     public static void WriteAt(string s, int x, int y,ConsoleColor fore = ConsoleColor.Black,ConsoleColor back = ConsoleColor.DarkCyan)
     {
-        while (wait) {
-            Thread.Sleep(1);
-        }
-        try
+        //while (wait) {
+        //    Thread.Sleep(1);
+        //}
+        //try
+        //{
+
+        //wait = true;
+        lock (lock_write)
         {
-            wait = true;
             Console.ForegroundColor = fore;
             Console.BackgroundColor = back;
             Console.SetCursorPosition(x, y);
             Console.Write(s);
             Console.ForegroundColor = fore_color;
             Console.BackgroundColor = back_color;
-            wait = false;
         }
-        catch (ArgumentOutOfRangeException e)
-        {
-            Console.Clear();
-            Console.WriteLine(e.Message);
-        }
+            //wait = false;
+        //}
+        //catch (ArgumentOutOfRangeException e)
+        //{
+        //    Console.Clear();
+        //    Console.WriteLine(e.Message);
+        //}
     }
     public static void WriteAt(char s, int x, int y, ConsoleColor fore = ConsoleColor.Black, ConsoleColor back = ConsoleColor.DarkCyan)
     {
-        while (wait) { }
-        try
+        //while (wait) { }
+        //try
+        //{
+        //wait = true;
+        lock (lock_write)
         {
-            wait = true;
             Console.ForegroundColor = fore;
             Console.BackgroundColor = back;
             Console.SetCursorPosition(x, y);
             Console.Write(s);
             Console.ForegroundColor = fore_color;
             Console.BackgroundColor = back_color;
-            wait = false;
         }
-        catch (ArgumentOutOfRangeException e)
-        {
-            Console.Clear();
-            Console.WriteLine(e.Message);
-        }
+        //wait = false;
+        //}
+        //catch (ArgumentOutOfRangeException e)
+        //{
+        //    Console.Clear();
+        //    Console.WriteLine(e.Message);
+        //}
     }
 
     public static void draw()
@@ -63,8 +71,13 @@ class drawwing
         Console.SetWindowSize(110,35);
         Console.SetBufferSize(110, 35);
         // Clear the screen
-        Console.BackgroundColor = ConsoleColor.DarkCyan;
-        Console.Clear();
+
+        ConsoleB.BackgroundColor = Color.DarkCyan;
+        ConsoleB.Clear();
+        //Console.Clear();
+        //Console.BackgroundColor = ConsoleColor.DarkCyan;
+        //ConsoleB.BackgroundColor = Color.DarkCyan;
+        //ConsoleB.Clear();
         Console.CursorVisible = false;
 
 
@@ -79,17 +92,15 @@ class drawwing
         {
             WriteAt("  ", 0, i,back:ConsoleColor.White);
             WriteAt("  ", 108, i,back:ConsoleColor.White);
+            WriteAt(" ", 2, i, back: ConsoleColor.DarkCyan);
+            WriteAt(" ", 107, i, back: ConsoleColor.DarkCyan);
+            Thread.Sleep(15);
         }
         for(int i = 0; i < 110; ++i)
         {
             WriteAt(" ", i, 0,back:ConsoleColor.White);
             WriteAt(" ", i, 30,back:ConsoleColor.White);
-        }
-        for (int i = 0; i < 110; ++i)
-        {
-        }
-        for (int i = 1; i < 31; ++i)
-        {
+            Thread.Sleep(15);
         }
         Console.BackgroundColor = ConsoleColor.DarkCyan;
         Console.ForegroundColor = ConsoleColor.Black;
@@ -109,6 +120,11 @@ class drawwing
             //{
             //   drawwing.WriteAt("  ", 0, i, back: ConsoleColor.White);
             //}
+
+            ConsoleB.SetCursorPosition(86, 34);
+            ConsoleB.BackgroundColor = Color.DarkCyan;
+            ConsoleB.Write("Press space to restart",Color.WhiteSmoke);
+            //WriteAt("press space to restart", 50, 34,back:ConsoleColor.DarkCyan,fore:ConsoleColor.DarkGreen);
             Thread.Sleep(200);
             var buf = co;
             co = coo;

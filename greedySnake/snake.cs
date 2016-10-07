@@ -25,7 +25,8 @@ namespace greedySnake
             {ConsoleKey.LeftArrow,snake_head.LEFT },
             {ConsoleKey.RightArrow,snake_head.RIGHT }
         };
-        int speed = 200;
+        public static int normal_speed = 200;
+        public static int speed = 200;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
         //////// key buffer
         ////////List<ConsoleKeyInfo> buf = new List<ConsoleKeyInfo>();
         // store the current color of the snake
@@ -47,17 +48,34 @@ namespace greedySnake
         public snake()
         {
             // generate the snake body
-            snake_body.Add(new int[] { 50, 15 });   // if the colum is even, then the gen should generate even position for food
-            snake_body.Insert(1, new int[] { 50, 16 });
+            snake_body.Add(new int[] { 50, 11 });   // if the colum is even, then the gen should generate even position for food
+            snake_body.Insert(1, new int[] { 50, 12 });
             snake_drawHead(snake_body[0]);
-            snake_drawBody(snake_body[0]);
-
+            snake_drawBody(snake_body[1]);
+            drawwing.WriteAt(
+                "press arrawKey to move the snake", 35, 15,fore:ConsoleColor.Blue);
+            drawwing.WriteAt("press shift while press arrawKey to speed up", 35, 16, fore: ConsoleColor.Blue);
+            drawwing.WriteAt("eat you own tail to reborn",35, 17, fore: ConsoleColor.Blue);
+            drawwing.WriteAt("NOW, are you ready?(press Enter)", 35, 19, fore: ConsoleColor.Red);
+            while (true)
+            {
+                drawwing.WriteAt("press Enter", 55, 19, fore: ConsoleColor.Red);
+                Thread.Sleep(100);
+                drawwing.WriteAt("press Enter", 55, 19, fore: ConsoleColor.Gray);
+                if (Console.ReadKey(true).Key == ConsoleKey.Enter)
+                    break;
+            }
+            drawwing.WriteAt(
+                "                                ", 35, 15);
+            drawwing.WriteAt("                                            ", 35, 16);
+            drawwing.WriteAt("                          ", 35, 17);
+            drawwing.WriteAt("                                ", 35, 19);
         }
         void snake_drawHead(int[] head, ConsoleColor fore_ = ConsoleColor.Yellow)
         {
             //draw snake head
             //drawwing.WriteAt((char)snake_dir, head[0], head[1]);
-            drawwing.WriteAt('¤', head[0], head[1], fore: fore_);
+            drawwing.WriteAt('¤', head[0], head[1], fore: fore_,back:ConsoleColor.DarkCyan);
         }
         static public void snake_reset(int[] tail)
         {
@@ -149,7 +167,8 @@ namespace greedySnake
 
 
             //check if eat itself
-            for (int i = 1; i != snake_body.Count - 1; ++i)
+            var limit = snake_body.Count - 1;
+            for (int i = 1; i != limit; ++i)
             {
                 if (snake_body[0].SequenceEqual(snake_body[i]))
                 {
@@ -160,7 +179,7 @@ namespace greedySnake
                 }
             }
             // if eat the tail, trigger the roop animation
-            if (snake_body[0].SequenceEqual(snake_body[snake_body.Count - 1]))
+            if (snake_body[0].SequenceEqual(snake_body[limit]))
             {
                 eat_tail();
                 drawwing.WriteAt("most delicious", 50, 15, ConsoleColor.Red);
@@ -175,6 +194,7 @@ namespace greedySnake
                     {
                         feed.eaten(iter);
                         snake_body.Add(null);
+                        return true;
                     }
                 }
             }
@@ -182,7 +202,6 @@ namespace greedySnake
             {
                 return true;
             }
-
 
             return true;
         }
@@ -209,7 +228,7 @@ namespace greedySnake
                 //if(buf.Count<3)
                 //    buf.Add(Console.ReadKey(true));
                 // check if it is valid key
-                if (key_waiting) continue;
+                //if (key_waiting) continue;
                 key = Console.ReadKey(true);
                 snake_head cur_dir = snake_dir;
 
@@ -227,12 +246,12 @@ namespace greedySnake
                 // this piece change the speed of the snack
                 if ((key.Modifiers & ConsoleModifiers.Shift) != 0)
                 {
-                    change_speed(100);
+                    speed = 100;
                 }
                 else
                 {
                     // if the key was not pressed
-                    change_speed(300);
+                    speed = normal_speed;
                 }
 
 
@@ -241,8 +260,9 @@ namespace greedySnake
                 {
                     continue;
                 }
-                key_waiting = true;
+                //key_waiting = true;
                 snake_dir = cur_dir;
+                Thread.Sleep(speed);
                 //++press;
 
 
@@ -282,7 +302,7 @@ namespace greedySnake
                 if (snake_check())
                 {
                     snake_move_normal();
-                    key_waiting = false;
+                    //key_waiting = false;
                 }
                 else
                     return;                // if the snake hit something, stop moving
@@ -335,9 +355,10 @@ namespace greedySnake
         {
             while (true)
             {
-                string t = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
-                drawwing.WriteAt("        ",100, 0, back: ConsoleColor.White, fore: ConsoleColor.DarkMagenta);
-                drawwing.WriteAt(t, 100, 0, back: ConsoleColor.White, fore: ConsoleColor.DarkMagenta);
+                //string t = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
+                //drawwing.WriteAt("        ",100, 0, back: ConsoleColor.White, fore: ConsoleColor.DarkMagenta);
+                //drawwing.WriteAt(t, 100, 0, back: ConsoleColor.White, fore: ConsoleColor.DarkMagenta);
+                drawwing.WriteAt(DateTime.Now.ToLongTimeString(), 100, 0, back: ConsoleColor.White, fore: ConsoleColor.DarkMagenta);
                 Thread.Sleep(1000);
             }
         }
@@ -363,6 +384,7 @@ namespace greedySnake
             var cur_second = DateTime.Now.Second;
             while (true)
             {
+                
                 cur_second = DateTime.Now.Second;
                 drawwing.WriteAt(food_table.Count.ToString(), 0, 32);
                 if(food_table.Count > max_food)
@@ -381,7 +403,6 @@ namespace greedySnake
                 if (new_pos[0] % 2 != 0)
                     new_pos[0] += 1;
                 food_table.Add(new_pos);  // add the new food to table
-
                 ++total;
                 drawwing.WriteAt('◎', new_pos[0], new_pos[1], fore: ConsoleColor.Cyan);
                 //if (cur_second - last_second > 5)
@@ -399,16 +420,17 @@ namespace greedySnake
         static public void eaten(int[] pos)
         {
             ++cur_score;
+            if(snake.normal_speed >= 100)
+            {
+                snake.normal_speed -= 5;
+            }
             score();
             //when the food is eaten, decrease the total
             for (var iter = 0; iter < food_table.Count; ++iter)
             {
                 if (food_table[iter].SequenceEqual(pos))
                 {
-                    lock (food_table)    // it seems useless
-                    {
-                        food_table.RemoveAt(iter);
-                    }
+                    food_table.RemoveAt(iter);
                     break;
                 }
             }

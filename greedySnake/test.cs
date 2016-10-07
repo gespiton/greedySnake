@@ -14,41 +14,11 @@ namespace test
     {
         static void Main()
         {
-            Console.Title = "greedySnake";
-            drawwing.draw();
-            ////ConsoleB.WriteAscii("haha");
-            //snake.write_time();
-            var s = new snake();
-            var food = new feed();
-            Thread move = new Thread(new ThreadStart(s.action));
-            Thread key_handle = new Thread(new ThreadStart(s.key_handler));
-            Thread generator = new Thread(new ThreadStart(food.generator));
-            Thread time = new Thread(new ThreadStart(snake.write_time));
-            //Thread speed_control = new Thread(snake.shift_prssed);
-            //Thread draw = new Thread(() => drawwing.WriteAt("hh", 20, 2));
-            //draw.Start();
-            time.Start();
-            move.Start();
-            key_handle.Start();
-            generator.Start();
-            while (move.IsAlive){}
-            key_handle.Abort();
-            generator.Abort();
-            time.Abort();
+            Console.Title = "greedySnake";  
 
-            Thread.Sleep(300);
 
-            ConsoleB.BackgroundColor = Color.DarkCyan;
-            Console.Clear();
-
-            Thread you_Died = new Thread(new ThreadStart(drawwing.ha_youDied));
-            drawwing.death_comic(feed.cur_score);
-            Thread.Sleep(500);
-            you_Died.Start();
-            Console.ReadKey(true);
-
-            return;
-           
+            start_game();
+            Environment.Exit(0);           
             //speed_control.Start();
 
             //List<int[]> li = new List<int[]> { };
@@ -65,9 +35,50 @@ namespace test
             //////}
             //Sample.WriteAt("0", 50, 15);            
         }
-        //void start_game()
-        //{
-        //    ThreadStart snake = new ThreadStart()
-        //}
+        static bool start_game()
+        {
+            drawwing.draw();
+            Thread time = new Thread(new ThreadStart(snake.write_time));
+            time.Start();
+            var s = new snake();
+            var food = new feed();
+            Thread move = new Thread(new ThreadStart(s.action));
+            Thread key_handle = new Thread(new ThreadStart(s.key_handler));
+            Thread generator = new Thread(new ThreadStart(food.generator));
+            //Thread speed_control = new Thread(snake.shift_prssed);
+            //Thread draw = new Thread(() => drawwing.WriteAt("hh", 20, 2));
+            //draw.Start();
+            move.Start();
+            key_handle.Start();
+            generator.Start();
+            while (move.IsAlive) { }
+
+
+            key_handle.Abort();
+            generator.Abort();
+            time.Abort();
+
+            Thread.Sleep(300);
+            ConsoleB.BackgroundColor = Color.DarkCyan;
+            Console.Clear();
+            Thread you_Died = new Thread(new ThreadStart(drawwing.ha_youDied));
+            drawwing.death_comic(feed.cur_score);
+            Thread.Sleep(500);
+            you_Died.Start();
+            var key = Console.ReadKey(true);
+            you_Died.Abort();
+            if (key.Key != ConsoleKey.Spacebar)
+            {
+                //Console.Clear();
+                return false;
+            }
+            else
+            {
+                //you_Died.Abort();
+                //ConsoleB.BackgroundColor = Color.DarkCyan;
+                //ConsoleB.Clear();
+                return start_game();
+            }
+        }
     }
 }
