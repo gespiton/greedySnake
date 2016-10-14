@@ -5,7 +5,6 @@ C:\Users\Administrator\Dropbox\greedySnake\greedySnake\bin\Debug\Colorful.Consol
 C:\Users\Administrator\Dropbox\greedySnake\greedySnake\bin\Debug\Colorful.Console.xml
 C:\Users\Administrator\Dropbox\greedySnake\greedySnake\obj\Debug\greedySnake.exe
 C:\Users\Administrator\Dropbox\greedySnake\greedySnake\obj\Debug\greedySnake.pdb
-C:\Users\Administrator\Dropbox\greedySnake\greedySnake\obj\Debug\greedySnake.csprojResolveAssemblyReference.cache
 C:\Users\10447_000\Dropbox\greedySnake\greedySnake\bin\Debug\greedySnake.exe.config
 C:\Users\10447_000\Dropbox\greedySnake\greedySnake\obj\Debug\greedySnake.exe
 C:\Users\10447_000\Dropbox\greedySnake\greedySnake\obj\Debug\greedySnake.pdb
@@ -14,3 +13,4 @@ C:\Users\10447_000\Dropbox\greedySnake\greedySnake\bin\Debug\greedySnake.pdb
 C:\Users\10447_000\Dropbox\greedySnake\greedySnake\bin\Debug\Colorful.Console.dll
 C:\Users\10447_000\Dropbox\greedySnake\greedySnake\bin\Debug\Colorful.Console.xml
 C:\Users\10447_000\Dropbox\greedySnake\greedySnake\obj\Debug\greedySnake.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Dropbox\greedySnake\greedySnake\obj\Debug\greedySnake.csprojResolveAssemblyReference.cache
