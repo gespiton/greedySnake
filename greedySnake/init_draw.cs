@@ -6,66 +6,73 @@ using System.Threading;
 using ConsoleB = Colorful.Console;
 //using Colorful;
 using System.Drawing;
+using Colorful;
 
 class drawwing
 {
-    //protected static int origRow;
-    //protected static int origCol;
-    static bool wait = false;
-    const ConsoleColor fore_color = ConsoleColor.Black;
-    const ConsoleColor back_color = ConsoleColor.DarkCyan;
-    public static void WriteAt(string s, int x, int y,ConsoleColor fore = ConsoleColor.Black,ConsoleColor back = ConsoleColor.DarkCyan)
+    static Color _back = Color.FromArgb(187, 207, 213);
+    static object lock_write = new object();
+    public static void WriteAt(string s, int x, int y,Color fore, Color back)
     {
-        while (wait) {
-            Thread.Sleep(1);
-        }
-        try
+        lock (lock_write)
         {
-            wait = true;
-            Console.ForegroundColor = fore;
-            Console.BackgroundColor = back;
-            Console.SetCursorPosition(x, y);
-            Console.Write(s);
-            Console.ForegroundColor = fore_color;
-            Console.BackgroundColor = back_color;
-            wait = false;
-        }
-        catch (ArgumentOutOfRangeException e)
-        {
-            Console.Clear();
-            Console.WriteLine(e.Message);
+            ConsoleB.ForegroundColor = fore;
+            ConsoleB.BackgroundColor = back;
+            ConsoleB.SetCursorPosition(x, y);
+            ConsoleB.Write(s);
         }
     }
-    public static void WriteAt(char s, int x, int y, ConsoleColor fore = ConsoleColor.Black, ConsoleColor back = ConsoleColor.DarkCyan)
+    public static void WriteAt(string s, int x, int y)
     {
-        while (wait) { }
-        try
+        lock (lock_write)
         {
-            wait = true;
-            Console.ForegroundColor = fore;
-            Console.BackgroundColor = back;
-            Console.SetCursorPosition(x, y);
-            Console.Write(s);
-            Console.ForegroundColor = fore_color;
-            Console.BackgroundColor = back_color;
-            wait = false;
+            ConsoleB.ForegroundColor = Color.White;
+            ConsoleB.BackgroundColor = _back;
+            ConsoleB.SetCursorPosition(x, y);
+            ConsoleB.Write(s);
+            //ConsoleB.ForegroundColor = Color.White;
+            //ConsoleB.BackgroundColor = Color.DarkCyan;
         }
-        catch (ArgumentOutOfRangeException e)
+    }
+    public static void WriteAt(char s, int x, int y, Color fore, Color back)
+    {
+        lock (lock_write)
         {
-            Console.Clear();
-            Console.WriteLine(e.Message);
+            ConsoleB.ForegroundColor = fore;
+            ConsoleB.BackgroundColor = back;
+            ConsoleB.SetCursorPosition(x, y);
+            ConsoleB.Write(s);
+            //ConsoleB.ForegroundColor = Color.White;
+            //ConsoleB.BackgroundColor = Color.White;
+        }
+    }
+    public static void WriteAt(char s, int x, int y,ColorAlternator alter)
+    {
+        lock (lock_write)
+        {
+            //ConsoleB.ForegroundColor = fore;
+            //ConsoleB.BackgroundColor = back;
+            ConsoleB.BackgroundColor = _back;
+            ConsoleB.SetCursorPosition(x, y);
+            ConsoleB.WriteAlternating(s,alter);
+            //ConsoleB.ForegroundColor = Color.White;
+            //ConsoleB.BackgroundColor = Color.White;
         }
     }
 
     public static void draw()
     {
         // set the console size
-        Console.SetWindowSize(110,35);
-        Console.SetBufferSize(110, 35);
+        ConsoleB.SetWindowSize(110,35);
+        ConsoleB.SetBufferSize(110, 35);
         // Clear the screen
-        Console.BackgroundColor = ConsoleColor.DarkCyan;
-        Console.Clear();
-        Console.CursorVisible = false;
+        ConsoleB.BackgroundColor = _back;
+        ConsoleB.Clear();
+        //Console.Clear();
+        //Console.BackgroundColor = ConsoleColor.DarkCyan;
+        //ConsoleB.BackgroundColor = Color.DarkCyan;
+        //ConsoleB.Clear();
+        ConsoleB.CursorVisible = false;
 
 
         // draw outline
@@ -77,69 +84,74 @@ class drawwing
         // use for loop to decrease the byte of the program
         for(int i =0;i < 31; ++i)
         {
-            WriteAt("  ", 0, i,back:ConsoleColor.White);
-            WriteAt("  ", 108, i,back:ConsoleColor.White);
+            WriteAt("  ", 0, i,back:Color.White,fore:Color.White);
+            WriteAt("  ", 108, i,back:Color.White,fore:Color.White);
+            WriteAt(" ", 2, i, back: _back, fore: _back);
+            WriteAt(" ", 107, i, back: _back, fore: _back);
+            Thread.Sleep(15);
         }
         for(int i = 0; i < 110; ++i)
         {
-            WriteAt(" ", i, 0,back:ConsoleColor.White);
-            WriteAt(" ", i, 30,back:ConsoleColor.White);
+            WriteAt(" ", i, 0, back: Color.White, fore: Color.White);
+            WriteAt(" ", i, 30, back: Color.White, fore: Color.White);
+            Thread.Sleep(15);
         }
-        for (int i = 0; i < 110; ++i)
-        {
-        }
-        for (int i = 1; i < 31; ++i)
-        {
-        }
-        Console.BackgroundColor = ConsoleColor.DarkCyan;
-        Console.ForegroundColor = ConsoleColor.Black;
-        WriteAt("craft by @ sher", 94, 34,fore:ConsoleColor.White);
+
+        ConsoleB.BackgroundColor = _back;
+        ConsoleB.ForegroundColor = Color.White;
+        WriteAt("craft by @ sher", 94, 34, back: _back, fore: Color.White);
     }
 
     public static void ha_youDied()
     {
-        var co = Color.Yellow;
-        var coo = Color.YellowGreen;
-        while(true)
+        var co = ConsoleColor.Yellow;
+        var coo = ConsoleColor.Red;
+        //ConsoleB.SetCursorPosition(86, 34);
+        //ConsoleB.BackgroundColor = _back;
+        //ConsoleB.Write("Press space to restart", Color.Blue);
+        while (true)
         {
             ConsoleB.SetCursorPosition(0, 20);
-            ConsoleB.BackgroundColor = Color.DarkCyan;
-            ConsoleB.WriteAscii("    Haa, you lose", co);
-            //for (int i = 0; i < 31; ++i)
-            //{
-            //   drawwing.WriteAt("  ", 0, i, back: ConsoleColor.White);
-            //}
+            ConsoleB.BackgroundColor = _back;
+            System.Console.ForegroundColor = co;
+            //ConsoleB.Write("haha", co);
+            System.Console.Write(@"
+                   __ __                                              __
+                  / // / ___ _ ___ _          __ __ ___  __ __       / / ___   ___ ___
+                 / _  / / _ `// _ `/ _       / // // _ \/ // /      / / / _ \ (_-</ -_)
+                /_//_/  \_,_/ \_,_/ ( )      \_, / \___/\_,_/      /_/  \___//___/\__/
+                                    |/      /___/
+                space to continue
+", 0, 20);
             Thread.Sleep(200);
             var buf = co;
             co = coo;
             coo = buf;
+            //}
         }
     }
     public static void death_comic(int score)
     {
         string buf="     "+"SCORE : " + (score * 10).ToString();
+        ConsoleB.BackgroundColor = _back;
+        ConsoleB.Clear();
         for(int i = 10; i >= 0; --i)
         {
-            ConsoleB.BackgroundColor = Color.DarkCyan;
+            ConsoleB.BackgroundColor = _back;
             ConsoleB.SetCursorPosition(0, 14);
             Thread.Sleep(70);
-            ConsoleB.WriteAscii(buf.Remove(0,i), color: Color.Orange);
-            //for (int ii = 14; ii < 25; ++ii)
-            //{
-            //    WriteAt("  ", 0, ii, back: ConsoleColor.White);
-            //    //WriteAt("  ", 108, ii, back: ConsoleColor.White);
-            //}
+            ConsoleB.WriteAscii(buf.Remove(0,i), color: Color.Black);
         }
     }
     public static void window_jump()
     {
         while (true)
         {
-            Console.SetWindowSize(105, 32);
-            Console.SetBufferSize(105, 32);
+            ConsoleB.SetWindowSize(105, 32);
+            ConsoleB.SetBufferSize(105, 32);
             Thread.Sleep(150);
-            Console.SetWindowSize(110, 35);
-            Console.SetBufferSize(110, 35);
+            ConsoleB.SetWindowSize(110, 35);
+            ConsoleB.SetBufferSize(110, 35);
             Thread.Sleep(100);
         }
     }
